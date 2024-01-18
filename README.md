@@ -10,7 +10,7 @@
 -   init : กำหนด init ทุกครั้งที่มีการเรื่มโปรเจคครั้งแรกหรือมีการเปลี่ยน Branch หรือ Repo (เป็น Optional ในครั้งต่อไปที่ upload ขึ้น Github)
 
 ```bash
-eval "$(curl -sL https://raw.githubusercontent.com/Miyu-Tenshi/private-repo-test/main/upload.sh)";upload USERNAME EMAIL BRANCH REPO "MESSAGE" init
+eval "$(curl -sL https://raw.githubusercontent.com/Miyu-Tenshi/utility-upload/main/upload.sh)";upload USERNAME EMAIL BRANCH REPO "MESSAGE" init
 ```
 
 ### Example
@@ -18,11 +18,11 @@ eval "$(curl -sL https://raw.githubusercontent.com/Miyu-Tenshi/private-repo-test
 เมื่ออัพโหลด code ครั้งแรก หรือมีการเปลี่ยน branch หรือ repository
 
 ```bash
-eval "$(curl -sL https://raw.githubusercontent.com/Miyu-Tenshi/private-repo-test/main/upload.sh)";upload miyu-tenshi example@gmail.com main utility-upload "comment" init
+eval "$(curl -sL https://raw.githubusercontent.com/Miyu-Tenshi/utility-upload/main/upload.sh)";upload miyu-tenshi example@gmail.com main utility-upload "comment" init
 ```
 
 อัพโหลดครั้งต่อไป ไม่จำเป็นต้องใส่ init ต่อท้าย
 
 ```bash
-eval "$(curl -sL https://raw.githubusercontent.com/Miyu-Tenshi/private-repo-test/main/upload.sh)";upload miyu-tenshi example@gmail.com main utility-upload "comment"
+eval "$(curl -sL https://raw.githubusercontent.com/Miyu-Tenshi/utility-upload/main/upload.sh)";upload miyu-tenshi example@gmail.com main utility-upload "comment"
 ```
