@@ -17,6 +17,8 @@ upload() {
         echo -e "\e[1;38;2;255;255;0m> \e[0;38;2;0;210;0mOpening github website";
         sleep 2;
         [[ $OSTYPE == "msys" ]] && cat "$SSH_KEY_PATH.pub" | clip && start "https://github.com/settings/ssh/new";
+        [[ $OSTYPE == "linux-android" ]] && cat "$SSH_KEY_PATH.pub" | termux-clipboard-set && termux-open-url "https://github.com/settings/ssh/new";
+        [[ $OSTYPE == "linux-gnu" ]] && cat "$SSH_KEY_PATH.pub" | xclip -selection clipboard && xdg-open "https://github.com/settings/ssh/new";
         read -p "$(printf "\e[1;38;2;255;255;0m> \e[1;38;2;255;255;255mEnsure SSH key added then press enter key to continue")" _;
         ssh -T git@github.com;
         # 255 Permission Denied
@@ -31,6 +33,8 @@ upload() {
             eval "$(ssh-agent -s)";
             ssh-add $SSH_KEY_PATH;
             [[ $OSTYPE == "msys" ]] && cat "$SSH_KEY_PATH.pub" | clip && start "https://github.com/settings/ssh/new";
+            [[ $OSTYPE == "linux-android" ]] && cat "$SSH_KEY_PATH.pub" | termux-clipboard-set && termux-open-url "https://github.com/settings/ssh/new";
+            [[ $OSTYPE == "linux-gnu" ]] && cat "$SSH_KEY_PATH.pub" | xclip -selection clipboard && xdg-open "https://github.com/settings/ssh/new";
             read -p "$(printf "\e[1;38;2;255;255;0m> \e[1;38;2;255;255;255m\nEnsure SSH key added then press enter key to continue")" _;
             ssh -T git@github.com;
             [ $? -eq 255 ] && echo -e "Not Found SSH KEY on github website" && return 1;
