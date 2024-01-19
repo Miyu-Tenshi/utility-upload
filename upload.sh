@@ -1,6 +1,7 @@
 #!/bin/bash
 
 upload() {
+    # check condition
     command -v ssh || { echo -e "command not found" && return 1; }
     command -v git || { echo -e "command not found" && return 1; }
     [ $# -le 3 ] && printf "\nArgument not enough\n- Username (required)\n- Email (required)\n- Branch name (required)\n- Repository Name (required)\n- Commit Message (Optional)\n- init (first time only)" && return 1;
@@ -9,8 +10,9 @@ upload() {
     ! [[ "$4" =~ [a-z0-9._-]+ ]] && printf "\nInvalid Repository Name" && return 1;
     sleep 2;
     local SSH_KEY_PATH="$HOME/.ssh/github_$1";
-
+    # start check ssh user
     if ! [ -f "$HOME/.ssh/github_$1" ]; then
+        # user private key not have
         eval "$(ssh-agent -s)";
         ssh-keygen -t ed25519 -E sha384 -f $SSH_KEY_PATH -N "" -C $2;
         ssh-add $SSH_KEY_PATH;
@@ -26,6 +28,9 @@ upload() {
         # 255 Permission Denied
         [ $? -eq 255 ] && echo -e "Not Found SSH KEY on github website" && return 1;
     else
+        # user private key has already
+        eval "$(ssh-agent -s)";
+        ssh-add $SSH_KEY_PATH;
         ssh -T git@github.com;
         [ $? -eq 255 ] && {
             echo -e "\e[1;38;2;255;0;0m> \e[0;38;2;220;0;0mNot Found SSH Authentication KEY on github website"
@@ -43,6 +48,7 @@ upload() {
         }
     fi
     sleep 2;
+    # start git upload
     [[ "$6" == "init" ]] && rm -rf .git && git init && git config --local user.name "$1" && git config --local user.email "$2" && git branch -M "$3" && git remote add origin "git@github.com:$1/$4.git";
     git add . && git commit -m "${5:-✨ Refactor code}";
     git push --set-upstream -f origin "$3" || { echo -e "\e[1A\e[1;38;2;255;0;0m> \e[0;38;2;255;0;100mUpload Failed\e[0K\r" && return 1; }
