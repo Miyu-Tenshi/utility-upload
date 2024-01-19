@@ -1,8 +1,8 @@
 #!/bin/bash
 
 upload() {
-    command -v ssh || echo -e "command not found" && return 1;
-    command -v git || echo -e "command not found" && return 1;
+    command -v ssh || { echo -e "command not found" && return 1; }
+    command -v git || { echo -e "command not found" && return 1; }
     [ $# -le 3 ] && printf "\nArgument not enough\n- Username (required)\n- Email (required)\n- Branch name (required)\n- Repository Name (required)\n- Commit Message (Optional)\n- init (first time only)" && return 1;
     [[ "$1" =~ ' ' ]] && printf "\nInvalid Username" && return 1;
     ! [[ "$2" =~ ^[a-zA-Z0-9._-]+@[a-zA-Z0-9._]+\.[a-z]{2,}$ ]] && printf "\nInvalid Email" && return 1;
